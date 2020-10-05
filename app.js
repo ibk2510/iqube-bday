@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const path = require('path');
 const User = require("./models/user");
 const body_parser = require("body-parser");
 const cors = require("cors");
@@ -27,7 +28,7 @@ let job = new CronJob(
   true,
   "Asia/Kolkata"
 );
-
+job.stop();
 
 // a function to get today in required format dd-mm-yyyy
 const get_today = () => {
@@ -60,8 +61,11 @@ const bday_checker = async () => {
   }
 };
 
+app.use(express.static(path.join(__dirname, './client/build')))
+
+
 app.get("/", async (req, res) => {
-  res.send("hello backend");
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
 app.post("/", async (req, res) => {
@@ -87,7 +91,7 @@ app.post("/", async (req, res) => {
     res.status(500).json({ success: false, message: err });
   }
 });
-const get_user = async () => {};
+
 
 const send_email_to_user = async (name, email) => {
   const nodemailer = require("nodemailer");
@@ -125,7 +129,7 @@ app.get("/controlCron", (req, res) => {
       job.start();
       res.send("job is started");
     }
-  } 
+  }
   else if (req.query.stop == "true") {
     job.stop();
     res.send("job stopped");
@@ -134,14 +138,7 @@ app.get("/controlCron", (req, res) => {
 // job.start();
 
 
-//heroku function
-if(process.env.NODE_ENV === 'production'){
-  app.use(express.static(path.join(__dirname,'b-day/build')));
 
-  app.get( "*", (req, res) => {
-    res.sendFile(path.join(__dirname + "b-day/build/index.html"));
-    });
-}
 
 app.listen(PORT, () => {
   console.log("server is listening at the port 5000");
