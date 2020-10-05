@@ -100,8 +100,8 @@ const send_email_to_user = async (name, email) => {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "kctiqube@gmail.com", // generated ethereal user
-      pass: "8870608877", // generated ethereal password
+      user: "<from mail>", // generated ethereal user
+      pass: "<password>", // generated ethereal password
     },
   });
 
