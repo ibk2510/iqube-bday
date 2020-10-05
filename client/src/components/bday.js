@@ -28,7 +28,7 @@ class Bday extends Component {
         dob: dob,
       }),
     };
-    const response = await fetch("http://localhost:5000/", requestOptions);
+    const response = await fetch("/", requestOptions);
     const data = await response.json();
     console.log(data);
     if (data.success) {
