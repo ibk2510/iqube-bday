@@ -20,5 +20,8 @@
     "nodemailer": "^6.4.13",
     "nodemon": "^2.0.4",
     "sweetalert": "^2.1.2"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
